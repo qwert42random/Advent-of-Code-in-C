@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 enum directions
 {
@@ -45,7 +46,15 @@ int main(int argc, char *argv[])
     InputString = realloc(InputString, ++StringIndex);
     InputString[StringIndex] = '\0';
 
-    printf("%s", InputString);
+    char *token;
+
+    // Seperate string.
+    token = strtok(InputString, ", ");
+    while (token != NULL)
+    {
+        printf("%s\n", token);
+        token = strtok(NULL, ", ");
+    }
 
     free(InputString);
     fclose(fptr);
