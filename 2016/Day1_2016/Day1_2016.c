@@ -30,11 +30,24 @@ int main(int argc, char *argv[])
     }
 
     char c;
+    char *InputString = (char*) malloc(sizeof(char));
+    int StringIndex = 0;
 
+    // Parse text in input file.
     while ((c = fgetc(fptr)) != EOF) {
-        printf("%c", c);
+
+        InputString = realloc(InputString, StringIndex + 1);
+        InputString[StringIndex] = c;
+        StringIndex++;
     }
 
+    // Add null terminator to end.
+    InputString = realloc(InputString, ++StringIndex);
+    InputString[StringIndex] = '\0';
+
+    printf("%s", InputString);
+
+    free(InputString);
     fclose(fptr);
     return 0;
 }
