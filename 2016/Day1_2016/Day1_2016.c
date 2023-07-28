@@ -21,6 +21,9 @@ int main(int argc, char *argv[])
     int DirectionFaced = NORTH;
     int turn = LEFT;
 
+    int x_coordinate = 0;
+    int y_coordinate = 0;
+
     FILE *fptr;
     fptr = fopen(argv[1], "r");
 
@@ -46,15 +49,51 @@ int main(int argc, char *argv[])
     InputString = realloc(InputString, ++StringIndex);
     InputString[StringIndex] = '\0';
 
-    char *token;
+    char *movement;
+    long int DistanceLength;
 
-    // Seperate string.
-    token = strtok(InputString, ", ");
-    while (token != NULL)
+    // Parse string and retrieve all movement.
+    movement = strtok(InputString, ", ");
+    while (movement != NULL)
     {
-        printf("%s\n", token);
-        token = strtok(NULL, ", ");
+
+        // Get direction.
+        switch(movement[0])
+        {
+            case 'R':
+                DirectionFaced = (DirectionFaced + 1) % 4;
+                break;
+            case 'L':
+                DirectionFaced = abs((DirectionFaced - 1) % 4);
+                break;
+            default:
+                printf("Invalid direction input: %c", movement[0]);
+                return 1;
+        }
+
+        // Get distance from string.
+        DistanceLength = strtol(&movement[1], NULL, 10);
+
+        switch(DirectionFaced)
+        {
+            case NORTH:
+                y_coordinate++;
+                break;
+            case EAST:
+                x_coordinate++;
+                break;
+            case SOUTH:
+                y_coordinate--;
+                break;
+            case WEST:
+                x_coordinate--;
+                break;
+        }
+
+        movement = strtok(NULL, ", ");
     }
+
+    printf("Outcome: %d\n", (abs(x_coordinate) + abs(y_coordinate)));
 
     free(InputString);
     fclose(fptr);
