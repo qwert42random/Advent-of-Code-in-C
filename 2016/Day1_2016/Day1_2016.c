@@ -19,7 +19,6 @@ enum turn
 int main(int argc, char *argv[])
 {
     int DirectionFaced = NORTH;
-    int turn = LEFT;
 
     int x_coordinate = 0;
     int y_coordinate = 0;
@@ -64,7 +63,7 @@ int main(int argc, char *argv[])
                 DirectionFaced = (DirectionFaced + 1) % 4;
                 break;
             case 'L':
-                DirectionFaced = abs((DirectionFaced - 1) % 4);
+                DirectionFaced = (DirectionFaced + 3) % 4;
                 break;
             default:
                 printf("Invalid direction input: %c", movement[0]);
@@ -77,16 +76,16 @@ int main(int argc, char *argv[])
         switch(DirectionFaced)
         {
             case NORTH:
-                y_coordinate++;
+                y_coordinate += DistanceLength;
                 break;
             case EAST:
-                x_coordinate++;
+                x_coordinate += DistanceLength;
                 break;
             case SOUTH:
-                y_coordinate--;
+                y_coordinate -= DistanceLength;
                 break;
             case WEST:
-                x_coordinate--;
+                x_coordinate -= DistanceLength;
                 break;
         }
 
